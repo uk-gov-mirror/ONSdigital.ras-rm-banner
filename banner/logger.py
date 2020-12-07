@@ -25,13 +25,14 @@ def add_severity_level(logger, method_name, event_dict):  # pylint: disable=unus
 
 # for basic configurations, calling basicConfig() to configure the root logger 
 # stdout is the destination to log the message.
-logging.basicConfig(stream=sys.stdout, level=log_level, format="%(name)s %(message)s")
-
+# logging.basicConfig(stream=sys.stdout, level=log_level, format="%(name)s %(message)s")
+logging.basicConfig(filename='logs.log', level=log_level, format="%(name)s %(message)s")
 configure(processors=[add_severity_level, add_log_level, filter_by_level, format_exc_info,
                       TimeStamper(fmt=logger_date_format,
                                   utc=True, key="created_at"),
                       JSONRenderer(indent=None)])
-
+                      
+# module-level logger si it's obvious where events are logged just from the logger name.
 logger = wrap_logger(logging.getLogger(__name__))
 logger.info("Logging started")
 
